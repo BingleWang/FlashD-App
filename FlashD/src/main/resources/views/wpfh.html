@@ -1,0 +1,757 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" by:nzcms·ningzhi.net
+		"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<link rel="shortcut icon" type="image/ico" href="nz.ico">
+	<link href="js/home/css/css.css" rel="stylesheet" type="text/css"/>
+	<link href="js/home/css/css_2.css" rel="stylesheet" type="text/css"/>
+
+
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<!--    <link rel="stylesheet" href="css/font-awesome.min.css">-->
+	<!--    <link rel="stylesheet" href="plugins/jqgrid/ui.jqgrid-bootstrap.css">-->
+	<!--    <link rel="stylesheet" href="plugins/ztree/css/metroStyle/metroStyle.css">-->
+	<!--    <link rel="stylesheet" href="css/main.css">-->
+	<script src="libs/jquery.min.js"></script>
+	<script src="plugins/layer/layer.js"></script>
+	<script src="libs/bootstrap.min.js"></script>
+	<script src="libs/vue.min.js"></script>
+	<script src="plugins/jqgrid/grid.locale-cn.js"></script>
+	<script src="plugins/jqgrid/jquery.jqGrid.min.js"></script>
+	<script src="plugins/ztree/jquery.ztree.all.min.js"></script>
+	<script src="js/common.js"></script>
+	<script src="plugins/laydate/laydate.js"></script>
+	<script src="libs/jquery/jquery.PrintArea.min.js"></script>
+	<style>
+		.ssinfo {
+			width: 230px;
+			height: 30px;
+			margin-left: 75px;
+			padding: 0 15px;
+			-moz-border-radius: 6px;
+			-webkit-border-radius: 6px;
+			border-radius: 50px;
+			border: 1px solid #cfcece;
+			-moz-box-shadow: 0 2px 3px 0 rgba(0, 0, 0, .1) inset;
+			-webkit-box-shadow: 0 2px 3px 0 rgba(0, 0, 0, .1) inset;
+			box-shadow: 0 2px 3px 0 rgba(0, 0, 0, .1) inset;
+			font-family: "Microsoft YaHei", Helvetica, Arial, sans-serif;
+			font-size: 14px;
+			color: #0a0909;
+			text-shadow: 0 1px 2px rgba(0, 0, 0, .1);
+			-o-transition: all .2s;
+			-moz-transition: all .2s;
+			-webkit-transition: all .2s;
+			-ms-transition: all .2s;
+			color: #999999;
+		}
+
+		a:link, a:visited {
+			color: #636262;
+			text-decoration: none;
+		}
+
+		a:hover {
+			color: #636262;
+			text-decoration: none;
+		}
+
+		li:hover #b{
+			display: block;
+		}
+
+		#b{
+			display: none;
+		}
+	</style>
+	<!-- -->
+
+
+	<!-- -->
+	<script type="text/javascript" src="js/home/js/png.js"></script>
+	<script type="text/javascript" src="js/home/js/jquery.liMarquee.js"></script>
+	<script type="text/javascript">
+		DD_belatedPNG.fix('.png,.index_pic_img,.box');
+	</script>
+
+	<!-- -->
+</head>
+
+<body>
+<div id="rrapp">
+	<div id="top_box">
+		<div id="top_left">Welcome to the FlashD</div>
+		<div id="top_right">
+			<a href="javascript:void(0);" onclick="AddFavorite('Express logistics system',location.href)">Favorite</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+			<a href="javascript:void(0);" onclick="SetHome(this,document.domain);">Set as index</a></div>
+	</div>
+
+
+	<!-- -->
+	<script type="text/javascript">
+		<!--
+		var timeout = 200;
+		var closetimer = 0;
+		var ddmenuitem = 0;
+
+		// open hidden layer
+		function mopen(id) {
+			// cancel close timer
+			mcancelclosetime();
+
+			// close old layer
+			if (ddmenuitem) ddmenuitem.style.visibility = 'hidden';
+
+			// get new layer and show it
+			ddmenuitem = document.getElementById(id);
+			ddmenuitem.style.visibility = 'visible';
+
+		}
+
+		// close showed layer
+		function mclose() {
+			if (ddmenuitem) ddmenuitem.style.visibility = 'hidden';
+		}
+
+		// go close timer
+		function mclosetime() {
+			closetimer = window.setTimeout(mclose, timeout);
+		}
+
+		// cancel close timer
+		function mcancelclosetime() {
+			if (closetimer) {
+				window.clearTimeout(closetimer);
+				closetimer = null;
+			}
+		}
+
+		// close layer when click-out
+		document.onclick = mclose;
+
+		// -->
+		function SetHome(obj, url) {
+			try {
+				obj.style.behavior = 'url(#default#homepage)';
+				obj.setHomePage(url);
+			} catch (e) {
+				if (window.netscape) {
+					try {
+						netscape.security.PrivilegeManager.enablePrivilege("UniversalXPConnect");
+					} catch (e) {
+						alert("Sorry, this operation has been rejected by the browser!\n\nPlease enter 'about: config' in the browser address bar and enter, then set [signed. applets. codebase_principal_support] to 'true'");
+					}
+				} else {
+					alert("Sorry, the browser you are using cannot complete this operation.\n\nYou need to manually【" + url + "】Set to index.");
+				}
+			}
+		}
+
+		//Favorite
+		function AddFavorite(title, url) {
+			try {
+				window.external.addFavorite(url, title);
+			} catch (e) {
+				try {
+					window.sidebar.addPanel(title, url, "");
+				} catch (e) {
+					alert("Sorry, the browser you are using cannot complete this operation.\n\nFailed to add, please use Ctrl+D to add");
+				}
+			}
+		}
+
+		function message() {
+			$('#b').show();
+			$('#c').hide();
+			$('#d').hide();
+			var oDiv=document.getElementById('top_dh_01');
+			oDiv.style.height='130px';
+		}
+		function messageout() {
+			var oDiv=document.getElementById('top_dh_01');
+			oDiv.style.height='70px';
+		}
+		function messageC() {
+			$('#c').show();
+			$('#b').hide();
+			$('#d').hide();
+			var oDiv=document.getElementById('top_dh_01');
+			oDiv.style.height='130px';
+		}
+		function messageoutC() {
+			var oDiv=document.getElementById('top_dh_01');
+			oDiv.style.height='70px';
+		}
+
+		function messageD() {
+			$('#d').show();
+			$('#b').hide();
+			$('#c').hide();
+			var oDiv=document.getElementById('top_dh_01');
+			oDiv.style.height='130px';
+		}
+		function messageoutD() {
+			var oDiv=document.getElementById('top_dh_01');
+			oDiv.style.height='70px';
+		}
+	</script>
+
+	<div id="top_dh_01" style="text-align: center; background-color: #FFFFCD ;color: black">
+		<form  method="post" class="form form-horizontal">
+			<div id="sddm" style=" width:1400px;margin: auto;height: 100%;overflow:hidden;">
+
+				<ul style=" list-style-type:none;  display:inline; text-align: center; ">
+					<li style="  line-height: 65px; "><a href="" style="font-size:24px;color: black"><img src="img/logo.png" alt="" style="float: left;width: 55px;height: 55px;border-radius: 30%;margin-right: 10px;margin-top: 3px;"/>
+                        Welcome</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					</li>
+
+					<li style="  line-height: 65px; font-size:18px;color: black"><a style="font-size:18px;color: black "
+																		href="wpfh.html">My Order</a>&nbsp;&nbsp;&nbsp;&nbsp;
+					</li>
+					<li style="  line-height: 65px; font-size:18px;color: black"><a style="font-size:18px;color: black"
+																		href="grxqym.html">Profile</a>&nbsp;&nbsp;&nbsp;&nbsp;
+					</li>
+					<li style="  line-height: 65px; font-size:18px;color: black"><a style="font-size:18px;color: black"
+																		href="index.html#modules/sys/dingdan.html">Administrator & Courier</a>&nbsp;&nbsp;&nbsp;&nbsp;
+					</li>
+					<li v-show="sfxsdl" style="  line-height: 65px; font-size:18px;color: black; margin-left: 200px;"><a style="font-size:18px;color: black">{{dlry}}  logged in</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                    </li>
+                    <li style="  line-height: 65px; font-size:18px;color: black">
+                        <a style="font-size:18px;color: black" @click="logout"> Exit</a>
+                    </li>
+
+				</ul>
+			</div>
+		</form>
+
+	</div>
+	<!-- -->
+
+
+	<link type="text/css" rel="stylesheet" href="js/home/css/wang.css">
+	<div>
+		<img src="img/banner.jpg" style="width: 100%;"/>
+	</div>
+	<div id="box">
+		<table class="table1200" border="0" align="center" cellpadding="0" cellspacing="8" bgcolor="#FFFFFF">
+			<tr valign="top">
+
+				<td align="center">
+
+
+					<table height="30" border="0" cellpadding="0" cellspacing="0">
+						<tr>
+							<td></td>
+						</tr>
+					</table>
+					<table width="100%" height="30" border="0" cellpadding="3" cellspacing="0" bgcolor="#F5F5F5"
+						   class="bg_qc">
+						<tr>
+							<td width="25" height="20" align="center"><img
+									src="img/nzcms.xinxin.gif" alt=""/></td>
+							<td align="left" class="title12">Your location:
+
+								Sending information
+							</td>
+						</tr>
+					</table>
+					<table height="10" border="0" cellpadding="0" cellspacing="0">
+						<tr>
+							<td></td>
+						</tr>
+					</table>
+
+					<!-- view -->
+					<meta http-equiv="Content-Type" content="text/html; "/>
+					<!-- view -->
+					<div >
+						<div class="form-group" style="height: 30px">
+							<div class="col-sm-2 control-label">Item type</div>
+							<div class="col-sm-4">
+								<select class="form-control" id="type" >
+									<option v-for="type in types" :value="type.id">{{type.name}}</option>
+								</select>
+							</div>
+							<div class="col-sm-2 control-label">Item size(cm)</div>
+							<div class="col-sm-4">
+								<input type="text" class="form-control" id="name" placeholder="30*15*10"/>
+							</div>
+						</div>
+
+						<div class="form-group" style="height: 30px">
+							<div class="col-sm-2 control-label">Item weight</div>
+							<div class="col-sm-4">
+								<input type="number" class="form-control" id="zl" placeholder="kg"/>
+							</div>
+							<div class="col-sm-2 control-label">Number of items</div>
+							<div class="col-sm-4">
+								<input type="number" class="form-control" id="sl" placeholder="Number of items"/>
+							</div>
+						</div>
+
+						<div class="form-group" style="height: 30px">
+							<div class="col-sm-2 control-label">Sender's username</div>
+							<div class="col-sm-4">
+								<input type="text" class="form-control" id="shrxm" placeholder="Sender's username"/>
+							</div>
+							<div class="col-sm-2 control-label">Contact number</div>
+							<div class="col-sm-4">
+								<input type="text" class="form-control" id="shrlxfs" placeholder="Contact number"/>
+							</div>
+						</div>
+
+
+						<div class="form-group" style="height: 30px">
+							<div class="col-sm-2 control-label">Sender's address</div>
+							<div class="col-sm-4">
+								<input type="text" class="form-control" id="shdz" placeholder="Sender's address"/>
+							</div>
+							<div class="col-sm-2 control-label">Postcode</div>
+							<div class="col-sm-4">
+								<input type="text" class="form-control" id="ybone" placeholder="postcode"/>
+							</div>
+
+						</div>
+
+						<div class="form-group" style="height: 30px">
+
+							<div class="col-sm-2 control-label">Receiver's username</div>
+							<div class="col-sm-4">
+								<input type="text" class="form-control" id="fhrxm" placeholder="Receiver's username"/>
+							</div>
+							<div class="col-sm-2 control-label">Contact number</div>
+							<div class="col-sm-4">
+								<input type="text" class="form-control" id="fhrlxfs" placeholder="Cotact number"/>
+							</div>
+						</div>
+
+						<div class="form-group" style="height: 30px">
+							<div class="col-sm-2 control-label">Receiver's address</div>
+							<div class="col-sm-4">
+								<input type="text" class="form-control" id="fhdz" placeholder="Receiver's Address"/>
+							</div>
+							<div class="col-sm-2 control-label">Postcode</div>
+							<div class="col-sm-4">
+								<input type="text" class="form-control" id="ybtwo" placeholder="postcode"/>
+							</div>
+						</div>
+
+
+						<div class="form-group" style="height: 30px">
+							<div class="col-sm-1 control-label">Reference</div>
+							<div class="col-sm-10">
+								<textarea rows="6" cols="68" style="width: 100%" id="bz">
+
+								</textarea>
+							</div>
+						</div>
+						<br><br><br><br><br><br>
+						<div class="form-group" style="height: 30px">
+							<div class="col-sm-2 control-label"></div>
+							<button type="button" class="btn btn-primary" @click="saveDingdan">
+								Get a quote
+							</button>
+						</div>
+						<br><br><br>
+
+
+						<table width="98%" border="0" align="center" cellpadding="0" cellspacing="0" class="dx" onMouseOver="this.bgColor='#f5f5f5';" onMouseOut="this.bgColor='#FFFFFF';" bgcolor="#ffffff"  style="cursor:pointer;">
+							<thead>
+							<tr>
+								<th width="35" height="40"></th>
+								<th width="80">Item type</th>
+								<th width="130">Reference</th>
+								<th width="100">Sender</th>
+								<th width="80">Amount</th>
+								<th width="80">Number of items</th>
+								<th width="50">weight</th>
+								<th width="100">Item status</th>
+								<th width="100">Courier</th>
+								<th width="100">Number</th>
+								<th width="100">Payment status</th>
+								<th width="200">Detail</th>
+							</tr>
+							</thead>
+							<tbody>
+							<tr v-if="dingdanList.length>0" v-for="(item, index) in dingdanList">
+								<td align="center"><img src="img/txt.png" alt="icon" /></td>
+								<td  align="left">{{item.typename}}</td>
+								<td  align="left">{{item.name}}</td>
+								<td  align="left">{{item.fhrxm}}</td>
+								<td  align="left">{{item.ddje}}</td>
+								<td  align="left">{{item.sl}}</td>
+								<td  align="left">{{item.zl}}</td>
+								<td  align="left">{{item.sfqrshname}}</td>
+
+								<td  align="left">{{item.ddfzr}}</td>
+								<td  align="left">{{item.ysdh}}</td>
+								<td  align="left">{{item.yhsfyfkname}}</td>
+								<td  align="left">
+									<a  class="btn btn-primary btn-sm" @click="ckxq(item.id)">&nbsp;Detail</a>
+									<a  class="btn btn-primary btn-sm" @click="wyjb(item.id,item.ddje,item.ydry)">&nbsp;Online payment</a>
+								</td>
+							</tr>
+
+							</tbody>
+						</table>
+
+						<table width="98%" border="0" cellpadding="0" cellspacing="0" bordercolor="#FFFFFF">
+							<tr>
+								<td align="right" class="list_title" style=" border-bottom: 1px solid #d8dadc;">&nbsp;</td>
+							</tr>
+						</table>
+					</div>
+				</td>
+			</tr>
+		</table>
+	</div>
+	﻿
+
+
+
+	<!-- payment Modal Box-->
+	<div class="modal fade" id="myModalPreachData" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+		 aria-hidden="true">
+		<div class="modal-dialog" style="width: 800px">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+						&times;
+					</button>
+					<h4 class="modal-title">
+						Online payment
+					</h4>
+				</div>
+				<div class="modal-body" style="height: 300px;text-align: center">
+					<form id="upload" method="post" style="text-align: center" class="form-horizontal" enctype="multipart/form-data">
+
+						<div class="form-group">
+							<div class="col-sm-2 control-label">Card Holder</div>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" readonly v-model="user.username" placeholder="Card holder"/>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<div class="col-sm-2 control-label">Expiry date</div>
+							<div class="col-sm-10">
+								<input type="text" readonly class="form-control" v-model="user.khh" placeholder="Expiry Date"/>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<div class="col-sm-2 control-label">CVC</div>
+							<div class="col-sm-10">
+								<input type="text" readonly class="form-control" v-model="user.yhkh" placeholder="CVC"/>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<div class="col-sm-2 control-label">Amount</div>
+							<div class="col-sm-10">
+								<input type="text" readonly class="form-control" id="fkje" placeholder="Amount"/>
+							</div>
+						</div>
+
+						<div style="width: 100%;text-align: left;margin-left:30px;border:0px red solid">
+						<img src="img/29fd0f43d0153870f93b3b67383ee62.png" @click="totest" style="width: 150px;height: 80px;text-align: left"/>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">close
+					</button>
+					<button type="button" class="btn btn-primary" @click="zhifu">
+						Pay
+					</button>
+				</div>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal -->
+	</div>
+
+
+</div>
+
+
+<script src="libs/jquery.min.js"></script>
+<script src="plugins/jqgrid/jquery.jqGrid.min.js"></script>
+<script src="libs/vue.min.js"></script>
+<script src="libs/bootstrap.min.js"></script>
+<script src="libs/app.js"></script>
+<script src="js/common.js"></script>
+<script type="text/javascript">
+	var vm = new Vue({
+		el:'#rrapp',
+		data:{
+			sfxsdl:false,
+			dlry:'',
+			showLogin:false,
+			username: '',
+			password: '',
+			captcha: '',
+			error: false,
+			errorMsg: '',
+			errorMsgreg:'',
+			src: 'captcha.jpg',
+			sxh:'',
+			sname:'',
+			xzraol:'',
+			susername:'',
+			spassword:'',
+			college:'',
+			major:'',
+			classinfo:'',
+			grade:'',
+			zcspassword:'',
+			dingdanList:[],
+			sysuser:{},
+			jiaofeiid:'',
+            types:[],
+			sz:0,
+			zxffid:"",
+			imgs:"img/banner.jpg",
+			user:{},
+		},
+		beforeCreate: function(){
+			if(self != top){
+				top.location.href = self.location.href;
+			}
+		},
+		mounted: function () {   //
+			this.getListAll();
+			this.getTypes();
+			this.timer = setInterval(this.getData, 8000);//
+			this.getUserDl();
+		},
+		methods: {
+			totest: function () {
+				console.log("22222222222222222")
+				window.open('https://www.paypal.com/uk/home');
+			},
+			zhifu: function () {
+				$("#myModalPreachData").modal('hide');
+				var param = {zxffid:vm.zxffid}
+				$.ajax({
+					type: "POST",
+					url: baseURL + "sysIndexQd/setFkzt",
+					contentType: "application/json",
+					data: JSON.stringify(param),
+					success: function(r){
+						if(r.code === 0){
+							alert('Payment success', function(){
+								vm.getListAll();
+							});
+						}else{
+							alert(r.msg);
+						}
+					}
+				});
+
+			},
+			logout: function () {
+				//
+				localStorage.removeItem("token");
+				//
+				location.href = baseURL + 'login.html';
+			},
+			getUserDl: function () {
+				var token = localStorage.getItem("token");
+				var param = {token:token}
+				$.ajax({
+					type: "POST",
+					url: baseURL + "sysIndexQd/getUserDl",
+					contentType: "application/json",
+					data: JSON.stringify(param),
+					success: function(r){
+						if(r.code === 0){
+							vm.sfxsdl = r.sfxsdl;
+							vm.dlry = r.dlry;
+						}else{
+							alert(r.msg);
+						}
+					}
+				});
+
+			},
+			getData: function() {//
+				var param = ["img/banner.jpg","img/banner2.jpg"]
+				vm.sz = vm.sz+1;
+				if(vm.sz>2){
+					vm.sz = 0;
+				}
+				if(vm.sz == 0){
+					console.log("0000000000000")
+					vm.imgs = "img/banner.jpg";
+				}else if(vm.sz == 1){
+					console.log("111111111111111")
+					vm.imgs = "img/banner2.jpg";
+				}else if(vm.sz == 2){
+					vm.imgs = "img/banner3.jpg";
+				}
+				console.log("aaaaaaaaaaaaa"+vm.sz)
+			},
+			ckxq: function (id) {
+				parent.location.href ='wlxq.html?id='+id;
+			},
+            getTypes: function () {
+                var param = {}
+                $.ajax({
+                    type: "POST",
+                    url: baseURL + "sysIndexQd/getTypes",
+                    contentType: "application/json",
+                    data: JSON.stringify(param),
+                    success: function(r){
+                        if(r.code == 0){
+                            vm.types = r.types
+                        }else{
+                            alert(r.msg);
+                        }
+                    }
+                });
+            },
+			// type name zl sl shrxm shrlxfs shdz fhrxm fhrlxfs fhdz bz
+			saveDingdan: function () {
+				var token = localStorage.getItem("token");
+				var type = $("#type").val();
+				var name = $("#name").val();
+				var zl = $("#zl").val();
+				var sl = $("#sl").val();
+				var shrxm = $("#shrxm").val();
+				var shrlxfs = $("#shrlxfs").val();
+				var shdz = $("#shdz").val();
+				var fhrxm = $("#fhrxm").val();
+				var fhrlxfs = $("#fhrlxfs").val();
+				var fhdz = $("#fhdz").val();
+				var bz = $("#bz").val();
+
+				var ybone = $("#ybone").val();
+				var ybtwo = $("#ybtwo").val();
+				if(ybone == null || ybtwo == null || ybone == '' || ybtwo == '' || ybone == undefined || ybtwo == undefined){
+					alert('Enterzip code，Necessary parameters for system calculation of amount', function(){
+						return;
+					})
+
+				}else{
+					console.log("yboneyboneyboneybone"+ybone)
+					console.log("ybtwoybtwoybtwoybtwo"+ybtwo)
+					var one = parseInt(ybone.slice(2,4))
+					var two = parseInt(ybtwo.slice(2,4))
+					console.log("oneoneone"+one)
+					console.log("twotwotwo"+two)
+					var ddje = 2.62+Math.abs((two-one))*0.3
+					console.log("ddjeddjeddje"+ddje)
+					var param = {
+						token:token,
+						type:type,
+						name:name,
+						zl:zl,
+						sl:sl,
+						shrxm:shrxm,
+						shrlxfs:shrlxfs,
+						shdz:shdz,
+						fhrxm:fhrxm,
+						fhrlxfs:fhrlxfs,
+						fhdz:fhdz,
+						bz:bz,
+						ddje:ddje,
+						ybone:ybone,
+						ybtwo:ybtwo,
+					}
+					$.ajax({
+						type: "POST",
+						url: baseURL + "sysIndexQd/saveDingdan",
+						contentType: "application/json",
+						data: JSON.stringify(param),
+						success: function(r){
+							if(r.code == 0){
+								alert('Booking successful, please wait for courier to pick up your item.', function(){
+									$("#myModalPreachData").modal('hide');
+									vm.getListAll();
+								});
+							}else{
+								alert(r.msg);
+							}
+						}
+					});
+				}
+
+
+			},
+			wyjb: function (id,ddje,username) {
+            	vm.zxffid = id
+				$("#fkje").val(ddje)
+				var param = {username:username}
+				console.log("kkkkkkkkkkkkkk"+JSON.stringify(param))
+				$.ajax({
+					type: "POST",
+					url: baseURL + "sysIndexQd/getUserByUsername",
+					contentType: "application/json",
+					data: JSON.stringify(param),
+					success: function(r){
+						if(r.code === 0){
+							vm.user = r.user;
+							console.log("useruseruser"+JSON.stringify(vm.user))
+							$("#myModalPreachData").modal('show');
+						}else{
+							alert(r.msg);
+						}
+					}
+				});
+
+			},
+			getUser: function () {
+				var token = localStorage.getItem("token");
+				console.log("tokentokentokentoken" + token)
+
+				if (token == null) {
+					// parent.location.href = baseURL + 'login.html';
+					window.open(baseURL + 'login.html');
+				}else{
+					var tjarray = {"token":token}
+					$.ajax({
+						type: "POST",
+						url: baseURL + "sysIndexQd/getUser",
+						contentType: "application/json",
+						data: JSON.stringify(tjarray),
+						success: function(r){
+							if(r.code === 0){
+								vm.sysuser = r.sysuser;
+							}else{
+								alert(r.msg);
+							}
+						}
+					});
+				}
+			},
+			getListAll: function () {
+				var token = localStorage.getItem("token");
+				console.log("tokentokentokentoken" + token)
+
+				if (token == null) {
+					// parent.location.href = baseURL + 'login.html';
+					window.open(baseURL + 'login.html');
+				}else {
+					var tjarray = {"token": token}
+					$.ajax({
+						type: "POST",
+						url: baseURL + "sysIndexQd/getDingdanListAll",
+						contentType: "application/json",
+						data: JSON.stringify(tjarray),
+						success: function (r) {
+							if (r.code === 0) {
+								console.log("r"+JSON.stringify(r))
+								vm.dingdanList = r.dingdanList;
+							} else {
+								alert(r.msg);
+							}
+						}
+					});
+				}
+			},
+		}
+	});
+</script>
+</body>
+</html>

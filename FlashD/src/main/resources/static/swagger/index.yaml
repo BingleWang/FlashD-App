@@ -1,0 +1,1431 @@
+swagger: '2.0'
+info:
+  description: jeefastis一个轻量级的Java快速开发平台
+  version: 1.0.0
+  title: jeefast快速开发平台
+
+basePath: /jeefast
+
+schemes:
+  - http
+
+#认证
+securityDefinitions:
+  api_key:
+    type: "apiKey"
+    name: "token"
+    in: "header"
+
+#定义interfacedata
+paths:
+  /captcha.jpg:
+    get:
+      tags:
+        - username
+      summary: getCode
+      produces:
+        - application/octet-stream
+  /sys/login:
+    post:
+      tags:
+        - username
+      summary: username
+      produces:
+        - application/json
+      parameters:
+        - name: username
+          description: username
+          in: query
+          type: string
+          required: true
+        - name: password
+          description: password
+          in: query
+          type: string
+          required: true
+        - name: captcha
+          description: Code
+          in: query
+          type: string
+          required: true
+      responses:
+        '200':
+          schema:
+            type: object
+            properties:
+              code:
+                description: state码 0：success  非0：失败
+                type: integer
+                format: int32
+              token:
+                description: token
+                type: string
+              expire:
+                description: 过期时长
+                type: integer
+                format: int32
+              msg:
+                description: 失败原因
+                type: string
+
+  /sys/user/list:
+    get:
+      tags:
+        - USER
+      summary: USERlist
+      produces:
+        - application/json
+      parameters:
+        - name: page
+          description: 页码
+          in: query
+          type: integer
+          required: true
+        - name: limit
+          description: 每页条数
+          in: query
+          type: integer
+          required: true
+        - name: sidx
+          description: sort字段
+          in: query
+          type: string
+        - name: order
+          description: sort方式，如：asc、desc
+          in: query
+          type: string
+        - name: username
+          description: username
+          in: query
+          type: string
+      responses:
+        '200':
+          description: return userlist
+          schema:
+            $ref: '#/definitions/SysUser'
+  /sys/user/info:
+    get:
+      tags:
+        - USER
+      summary: 当前 userinfo
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: return当前manage员info
+          schema:
+            $ref: '#/definitions/SysUser'
+  /sys/user/info/{userId}:
+    get:
+      tags:
+        - USER
+      summary: get userinfo
+      produces:
+        - application/json
+      parameters:
+        - name: userId
+          description: userId
+          in: path
+          type: integer
+          required: true
+      responses:
+        '200':
+          description: return userinfo
+          schema:
+            $ref: '#/definitions/SysUser'
+  /sys/user/password:
+    post:
+      tags:
+        - USER
+      summary: updatepassword
+      produces:
+        - application/json
+      parameters:
+        - name: password
+          description: old password
+          in: query
+          type: string
+          required: true
+        - name: newPassword
+          description: new password
+          in: query
+          type: string
+          required: true
+      responses:
+        '200':
+          schema:
+            $ref: '#/definitions/R'
+  /sys/user/save:
+    post:
+      tags:
+        - USER
+      summary: add user
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          description: manage员object
+          in: body
+          type: string
+          schema:
+            $ref: '#/definitions/SysUserEdit'
+          required: true
+      responses:
+        '200':
+          schema:
+            $ref: '#/definitions/R'
+  /sys/user/update:
+    post:
+      tags:
+        - USER
+      summary: update user
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          description:  userobject
+          in: body
+          type: string
+          schema:
+            $ref: '#/definitions/SysUserEdit'
+          required: true
+      responses:
+        '200':
+          schema:
+            $ref: '#/definitions/R'
+  /sys/user/delete:
+    post:
+      tags:
+        - USER
+      summary: delete user
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          description: userIdlist
+          in: body
+          type: array
+          items:
+            type: integer
+            format: int64
+            default: 0
+          required: true
+      responses:
+        '200':
+          schema:
+            $ref: '#/definitions/R'
+
+  /sys/dept/list:
+    get:
+      tags:
+        - Department
+      summary: 部门list
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: return部门list
+          schema:
+            $ref: '#/definitions/SysDept'
+  /sys/dept/select:
+    get:
+      tags:
+        - Department
+      summary: Select Department
+      description: add、update部门的时候，selectSuperior departmentinterface
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: return部门list
+          schema:
+            $ref: '#/definitions/SysDept'
+  /sys/dept/info:
+    get:
+      tags:
+        - Department
+      summary: getSuperior departmentId(manage员则为0)
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: return部门info
+          schema:
+            type: object
+            properties:
+              code:
+                description: state码 0：success  非0：失败
+                type: integer
+                format: int32
+              deptId:
+                description: Superior departmentID
+                type: integer
+                format: int64
+              msg:
+                description: 失败原因
+                type: string
+  /sys/dept/info/{deptId}:
+    get:
+      tags:
+        - Department
+      summary: get部门info
+      produces:
+        - application/json
+      parameters:
+        - name: deptId
+          description: deptId
+          in: path
+          type: integer
+          required: true
+      responses:
+        '200':
+          description: return部门info
+          schema:
+            $ref: '#/definitions/SysDept'
+  /sys/dept/save:
+    post:
+      tags:
+        - Department
+      summary: add部门
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          description: 部门object
+          in: body
+          type: string
+          schema:
+            $ref: '#/definitions/SysDeptEdit'
+          required: true
+      responses:
+        '200':
+          schema:
+            $ref: '#/definitions/R'
+  /sys/dept/update:
+    post:
+      tags:
+        - Department
+      summary: update部门
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          description: 部门object
+          in: body
+          type: string
+          schema:
+            $ref: '#/definitions/SysDeptEdit'
+          required: true
+      responses:
+        '200':
+          schema:
+            $ref: '#/definitions/R'
+  /sys/dept/delete:
+    post:
+      tags:
+        - Department
+      summary: delete部门
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          description: deptIdlist
+          in: body
+          type: array
+          items:
+            type: integer
+            format: int64
+            default: 0
+          required: true
+      responses:
+        '200':
+          schema:
+            $ref: '#/definitions/R'
+
+  /sys/role/list:
+    get:
+      tags:
+        - Roles
+      summary: rolelist
+      produces:
+        - application/json
+      parameters:
+        - name: page
+          description: 页码
+          in: query
+          type: integer
+          required: true
+        - name: limit
+          description: 每页条数
+          in: query
+          type: integer
+          required: true
+        - name: sidx
+          description: sort字段
+          in: query
+          type: string
+        - name: order
+          description: sort方式，如：asc、desc
+          in: query
+          type: string
+        - name: roleName
+          description: role名
+          in: query
+          type: string
+      responses:
+        '200':
+          description: returnmanage员list
+          schema:
+            $ref: '#/definitions/SysRole'
+  /sys/role/select:
+    get:
+      tags:
+        - Roles
+      summary: 当前usernamerolelist
+      description: 如果is超级manage员，则能queryall的rolelist
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: returnmanage员list
+          schema:
+            $ref: '#/definitions/SysRole'
+  /sys/role/info/{roleId}:
+    get:
+      tags:
+        - Roles
+      summary: getroleinfo
+      produces:
+        - application/json
+      parameters:
+        - name: roleId
+          description: roleID
+          in: path
+          type: integer
+          required: true
+      responses:
+        '200':
+          description: returnroleinfo
+          schema:
+            $ref: '#/definitions/SysRole'
+  /sys/role/save:
+    post:
+      tags:
+        - Roles
+      summary: addrole
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          description: roleobject
+          in: body
+          type: string
+          schema:
+            $ref: '#/definitions/SysRoleEdit'
+          required: true
+      responses:
+        '200':
+          schema:
+            $ref: '#/definitions/R'
+  /sys/role/update:
+    post:
+      tags:
+        - Roles
+      summary: updaterole
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          description: roleobject
+          in: body
+          type: string
+          schema:
+            $ref: '#/definitions/SysRoleEdit'
+          required: true
+      responses:
+        '200':
+          schema:
+            $ref: '#/definitions/R'
+  /sys/role/delete:
+    post:
+      tags:
+        - Roles
+      summary: deleterole
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          description: roleIDlist
+          in: body
+          type: array
+          items:
+            type: integer
+            format: int64
+            default: 0
+          required: true
+      responses:
+        '200':
+          schema:
+            $ref: '#/definitions/R'
+
+  /sys/menu/list:
+    get:
+      tags:
+        - menu management
+      summary: menulist
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: returnmenulist
+          schema:
+            $ref: '#/definitions/SysMenu'
+  /sys/menu/nav:
+    get:
+      tags:
+        - menu management
+      summary: Menulist
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: returnMenulist
+          schema:
+            $ref: '#/definitions/SysMenu'
+  /sys/menu/select:
+    get:
+      tags:
+        - menu management
+      summary: selectmenu
+      description: add、updatemenu的时候，selectup menuinterface
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: returnmenulist
+          schema:
+            $ref: '#/definitions/SysMenu'
+  /sys/menu/info/{menuId}:
+    get:
+      tags:
+        - menu management
+      summary: getmenuinfo
+      produces:
+        - application/json
+      parameters:
+        - name: menuId
+          description: menuID
+          in: path
+          type: integer
+          required: true
+      responses:
+        '200':
+          description: returnmenuinfo
+          schema:
+            $ref: '#/definitions/SysRole'
+  /sys/menu/save:
+    post:
+      tags:
+        - menu management
+      summary: addmenu
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          description: menuobject
+          in: body
+          type: string
+          schema:
+            $ref: '#/definitions/SysMenuEdit'
+          required: true
+      responses:
+        '200':
+          schema:
+            $ref: '#/definitions/R'
+  /sys/menu/update:
+    post:
+      tags:
+        - menu management
+      summary: updatemenu
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          description: menuobject
+          in: body
+          type: string
+          schema:
+            $ref: '#/definitions/SysMenuEdit'
+          required: true
+      responses:
+        '200':
+          schema:
+            $ref: '#/definitions/R'
+  /sys/menu/delete:
+    post:
+      tags:
+        - menu management
+      summary: deletemenu
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          description: menuIDlist
+          in: body
+          type: array
+          items:
+            type: integer
+            format: int64
+            default: 0
+          required: true
+      responses:
+        '200':
+          schema:
+            $ref: '#/definitions/R'
+
+  /sys/log/list:
+    get:
+      tags:
+        - system log
+      summary: 日志list
+      produces:
+        - application/json
+      parameters:
+        - name: page
+          description: 页码
+          in: query
+          type: integer
+          required: true
+        - name: limit
+          description: 每页条数
+          in: query
+          type: integer
+          required: true
+        - name: sidx
+          description: sort字段
+          in: query
+          type: string
+        - name: order
+          description: sort方式，如：asc、desc
+          in: query
+          type: string
+        - name: key
+          description: username或 useroperate
+          in: query
+          type: string
+      responses:
+        '200':
+          description: return日志list
+          schema:
+            $ref: '#/definitions/SysLog'
+
+  /sys/config/list:
+    get:
+      tags:
+        - parametermanage
+      summary: parameterlist
+      produces:
+        - application/json
+      parameters:
+        - name: page
+          description: 页码
+          in: query
+          type: integer
+          required: true
+        - name: limit
+          description: 每页条数
+          in: query
+          type: integer
+          required: true
+        - name: sidx
+          description: sort字段
+          in: query
+          type: string
+        - name: order
+          description: sort方式，如：asc、desc
+          in: query
+          type: string
+        - name: key
+          description: parameter名
+          in: query
+          type: string
+      responses:
+        '200':
+          description: returnparameterlist
+          schema:
+            $ref: '#/definitions/SysConfig'
+  /sys/config/info/{id}:
+    get:
+      tags:
+        - parametermanage
+      summary: getparameterinfo
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          description: parameterID
+          in: path
+          type: integer
+          required: true
+      responses:
+        '200':
+          description: returnparameterinfo
+          schema:
+            $ref: '#/definitions/SysConfig'
+  /sys/config/save:
+    post:
+      tags:
+        - parametermanage
+      summary: addparameter
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          description: parameterobject
+          in: body
+          type: string
+          schema:
+            $ref: '#/definitions/SysConfig'
+          required: true
+      responses:
+        '200':
+          schema:
+            $ref: '#/definitions/R'
+  /sys/config/update:
+    post:
+      tags:
+        - parametermanage
+      summary: updateparameter
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          description: parameterobject
+          in: body
+          type: string
+          schema:
+            $ref: '#/definitions/SysConfig'
+          required: true
+      responses:
+        '200':
+          schema:
+            $ref: '#/definitions/R'
+  /sys/config/delete:
+    post:
+      tags:
+        - parametermanage
+      summary: deleteparameter
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          description: parameterIDlist
+          in: body
+          type: array
+          items:
+            type: integer
+            format: int64
+            default: 0
+          required: true
+      responses:
+        '200':
+          schema:
+            $ref: '#/definitions/R'
+
+  /sys/oss/list:
+    get:
+      tags:
+        - file服务
+      summary: filelist
+      produces:
+        - application/json
+      parameters:
+        - name: page
+          description: 页码
+          in: query
+          type: integer
+          required: true
+        - name: limit
+          description: 每页条数
+          in: query
+          type: integer
+          required: true
+        - name: sidx
+          description: sort字段
+          in: query
+          type: string
+        - name: order
+          description: sort方式，如：asc、desc
+          in: query
+          type: string
+      responses:
+        '200':
+          description: returnfilelist
+          schema:
+            $ref: '#/definitions/SysOss'
+  /sys/oss/config:
+    get:
+      tags:
+        - file服务
+      summary: 云存储configurationinfo
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: return云存储configurationinfo
+          schema:
+            $ref: '#/definitions/SysCloudStorage'
+  /sys/oss/saveConfig:
+    post:
+      tags:
+        - file服务
+      summary: save云存储configurationinfo
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          description: parameterobject
+          in: body
+          type: string
+          schema:
+            $ref: '#/definitions/SysCloudStorage'
+          required: true
+      responses:
+        '200':
+          schema:
+            $ref: '#/definitions/R'
+  /sys/oss/upload:
+    post:
+      tags:
+        - file服务
+      summary: uploadfile
+      consumes:
+        - multipart/form-data
+      produces:
+        - application/json
+      parameters:
+        - name: file
+          description: file
+          in: formData
+          type: file
+          required: true
+      responses:
+        '200':
+          description: returnfilelist
+          schema:
+            type: object
+            properties:
+              code:
+                description: state码 0：success  非0：失败
+                type: integer
+                format: int32
+              url:
+                description: fileURLaddress
+                type: string
+              msg:
+                description: 失败原因
+                type: string
+  /sys/oss/delete:
+    post:
+      tags:
+        - file服务
+      summary: deletefile
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          description: fileIDlist
+          in: body
+          type: array
+          items:
+            type: integer
+            format: int64
+            default: 0
+          required: true
+      responses:
+        '200':
+          schema:
+            $ref: '#/definitions/R'
+
+  /sys/schedule/list:
+    get:
+      tags:
+        - 定时任务
+      summary: 定时任务list
+      produces:
+        - application/json
+      parameters:
+        - name: page
+          description: 页码
+          in: query
+          type: integer
+          required: true
+        - name: limit
+          description: 每页条数
+          in: query
+          type: integer
+          required: true
+        - name: sidx
+          description: sort字段
+          in: query
+          type: string
+        - name: order
+          description: sort方式，如：asc、desc
+          in: query
+          type: string
+        - name: beanName
+          description: spring beanname
+          in: query
+          type: string
+      responses:
+        '200':
+          description: return定时任务list
+          schema:
+            $ref: '#/definitions/ScheduleJob'
+  /sys/schedule/info/{id}:
+    get:
+      tags:
+        - 定时任务
+      summary: get定时任务info
+      produces:
+        - application/json
+      parameters:
+        - name: jobId
+          description: 定时任务ID
+          in: path
+          type: integer
+          required: true
+      responses:
+        '200':
+          description: return定时任务info
+          schema:
+            $ref: '#/definitions/ScheduleJob'
+  /sys/schedule/save:
+    post:
+      tags:
+        - 定时任务
+      summary: add定时任务
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          description: 定时任务object
+          in: body
+          type: string
+          schema:
+            $ref: '#/definitions/ScheduleJob'
+          required: true
+      responses:
+        '200':
+          schema:
+            $ref: '#/definitions/R'
+  /sys/schedule/update:
+    post:
+      tags:
+        - 定时任务
+      summary: update定时任务
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          description: 定时任务object
+          in: body
+          type: string
+          schema:
+            $ref: '#/definitions/ScheduleJob'
+          required: true
+      responses:
+        '200':
+          schema:
+            $ref: '#/definitions/R'
+  /sys/schedule/delete:
+    post:
+      tags:
+        - 定时任务
+      summary: delete定时任务
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          description: 定时任务IDlist
+          in: body
+          type: array
+          items:
+            type: integer
+            format: int64
+            default: 0
+          required: true
+      responses:
+        '200':
+          schema:
+            $ref: '#/definitions/R'
+  /sys/schedule/run:
+    post:
+      tags:
+        - 定时任务
+      summary: 立即执行任务
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          description: 定时任务IDlist
+          in: body
+          type: array
+          items:
+            type: integer
+            format: int64
+            default: 0
+          required: true
+      responses:
+        '200':
+          schema:
+            $ref: '#/definitions/R'
+  /sys/schedule/pause:
+    post:
+      tags:
+        - 定时任务
+      summary: 暂停定时任务
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          description: 定时任务IDlist
+          in: body
+          type: array
+          items:
+            type: integer
+            format: int64
+            default: 0
+          required: true
+      responses:
+        '200':
+          schema:
+            $ref: '#/definitions/R'
+  /sys/schedule/resume:
+    post:
+      tags:
+        - 定时任务
+      summary: 恢复定时任务
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          description: 定时任务IDlist
+          in: body
+          type: array
+          items:
+            type: integer
+            format: int64
+            default: 0
+          required: true
+      responses:
+        '200':
+          schema:
+            $ref: '#/definitions/R'
+
+#定义data模型
+definitions:
+  R:
+      type: object
+      properties:
+        code:
+          description: state码 0：success  非0：失败
+          type: integer
+          format: int32
+        msg:
+          description: 失败原因
+          type: string
+  SysUser:
+    type: object
+    properties:
+      userId:
+        description: userId
+        type: integer
+        format: int64
+      username:
+        description: username
+        type: string
+      deptId:
+        description: deptId
+        type: integer
+        format: int64
+      deptName:
+        description: Department Name
+        type: string
+      password:
+        description: password
+        type: string
+      email:
+        description: email
+        type: string
+      mobile:
+        description: mobile
+        type: string
+      status:
+        description: state  0：Disable   1：normal
+        type: integer
+        format: int32
+      roleIdList:
+        description: roleIDlist
+        type: array
+        items:
+          type: integer
+          format: int64
+      createUserId:
+        description: createUserID
+        type: integer
+        format: int64
+      createTime:
+        description: createTime
+        type: string
+        format: date-time
+  SysUserEdit:
+      type: object
+      properties:
+        userId:
+          description: userId
+          type: integer
+          format: int64
+        username:
+          description: username
+          type: string
+        deptId:
+          description: deptId
+          type: integer
+          format: int64
+        password:
+          description: password
+          type: string
+        email:
+          description: email
+          type: string
+        mobile:
+          description: mobile
+          type: string
+        status:
+          description: state  0：Disable   1：normal
+          type: integer
+          format: int32
+        roleIdList:
+          description: roleIDlist
+          type: array
+          items:
+            type: integer
+            format: int32
+  SysDept:
+    type: object
+    properties:
+      deptId:
+        description: deptId
+        type: integer
+        format: int64
+      name:
+        description: Department Name
+        type: string
+      parentId:
+        description: Superior departmentID，First level department为0
+        type: integer
+        format: int64
+      parentName:
+        description: superiorDepartment Name
+        type: string
+      orderNum:
+        description: sort
+        type: integer
+        format: int32
+      open:
+        description: isno展开   true：展开   false：不展开
+        type: boolean
+        format: int32
+  SysDeptEdit:
+    type: object
+    properties:
+      name:
+        description: Department Name
+        type: string
+      parentId:
+        description: Superior departmentID，First level department为0
+        type: integer
+        format: int64
+      orderNum:
+        description: sort
+        type: integer
+        format: int32
+  SysRole:
+    type: object
+    properties:
+      roleId:
+        description: roleID
+        type: integer
+        format: int64
+      roleName:
+        description: RoleName
+        type: string
+      deptId:
+        description: deptId
+        type: integer
+        format: int64
+      deptName:
+        description: Department Name
+        type: string
+      remark:
+        description: remark
+        type: string
+      menuIdList:
+        description: menuIDlist
+        type: array
+        items:
+          type: integer
+          format: int64
+      createUserId:
+        description: createUserID
+        type: integer
+        format: int64
+      createTime:
+        description: createTime
+        type: string
+        format: date-time
+  SysRoleEdit:
+    type: object
+    properties:
+      roleId:
+        description: roleID
+        type: integer
+        format: int64
+      roleName:
+        description: RoleName
+        type: string
+      deptId:
+        description: deptId
+        type: integer
+        format: int64
+      remark:
+        description: remark
+        type: string
+      menuIdList:
+        description: menuIDlist
+        type: array
+        items:
+          type: integer
+          format: int64
+  SysMenu:
+    type: object
+    properties:
+      menuId:
+        description: menuID
+        type: integer
+        format: int64
+      name:
+        description: menu name
+        type: string
+      parentId:
+        description: 父menuID，First level menu为0
+        type: integer
+        format: int64
+      parentName:
+        description: 父menu name
+        type: string
+      url:
+        description: menuURL
+        type: string
+      perms:
+        description: Authorization identification
+        type: string
+      type:
+        description: type     0：directory   1：menu   2：button
+        type: integer
+        format: int32
+      icon:
+        description: menuicon
+        type: string
+      orderNum:
+        description: sort
+        type: integer
+        format: int32
+      open:
+        description: isno展开   true：展开   false：不展开
+        type: boolean
+        format: int32
+  SysMenuEdit:
+    type: object
+    properties:
+      menuId:
+        description: menuID
+        type: integer
+        format: int64
+      name:
+        description: menu name
+        type: string
+      parentId:
+        description: 父menuID，First level menu为0
+        type: integer
+        format: int64
+      url:
+        description: menuURL
+        type: string
+      perms:
+        description: Authorization identification
+        type: string
+      type:
+        description: type     0：directory   1：menu   2：button
+        type: integer
+        format: int32
+      icon:
+        description: menuicon
+        type: string
+      orderNum:
+        description: sort
+        type: integer
+        format: int32
+  SysLog:
+    type: object
+    properties:
+      id:
+        description: 日志ID
+        type: integer
+        format: int64
+      username:
+        description: username
+        type: string
+      operation:
+        description:  useroperate
+        type: string
+      method:
+        description: method
+        type: string
+      params:
+        description: 请求parameter
+        type: string
+      time:
+        description: time
+        type: integer
+        format: int64
+      ip:
+        description: IPaddress
+        type: string
+      createTime:
+        description: createTime
+        type: string
+        format: date-time
+  SysConfig:
+    type: object
+    properties:
+      id:
+        description: parameterID
+        type: integer
+        format: int64
+      key:
+        description: parameter名
+        type: string
+      value:
+        description: parameter值
+        type: string
+      remark:
+        description: remark
+        type: string
+  SysOss:
+    type: object
+    properties:
+      id:
+        description: ID
+        type: integer
+        format: int64
+      url:
+        description: URLaddress
+        type: string
+      createTime:
+        description: createTime
+        type: string
+        format: date-time
+  SysCloudStorage:
+    type: object
+    properties:
+      type:
+        description: type 1：七牛  2：阿里云  3：腾讯云
+        type: integer
+        format: int32
+      qiniuDomain:
+        description: 七牛绑定的域名
+        type: string
+      qiniuPrefix:
+        description: 七牛路径前缀
+        type: string
+      qiniuAccessKey:
+        description: 七牛ACCESS_KEY
+        type: string
+      qiniuSecretKey:
+        description: 七牛SECRET_KEY
+        type: string
+      qiniuBucketName:
+        description: 七牛存储空间名
+        type: string
+      aliyunDomain:
+        description: 阿里云绑定的域名
+        type: string
+      aliyunPrefix:
+        description: 阿里云路径前缀
+        type: string
+      aliyunEndPoint:
+        description: 阿里云EndPoint
+        type: string
+      aliyunAccessKeyId:
+        description: 阿里云AccessKeyId
+        type: string
+      aliyunAccessKeySecret:
+        description: 阿里云AccessKeySecret
+        type: string
+      aliyunBucketName:
+        description: 阿里云BucketName
+        type: string
+      qcloudDomain:
+        description: 腾讯云绑定的域名
+        type: string
+      qcloudPrefix:
+        description: 腾讯云路径前缀
+        type: string
+      qcloudAppId:
+        description: 腾讯云AppId
+        type: string
+      qcloudSecretId:
+        description: 腾讯云SecretId
+        type: string
+      qcloudSecretKey:
+        description: 腾讯云SecretKey
+        type: string
+      qcloudBucketName:
+        description: 腾讯云BucketName
+        type: string
+      qcloudRegion:
+        description: 腾讯云COS所属地区
+        type: string
+  ScheduleJob:
+    type: object
+    properties:
+      jobId:
+        description: 任务ID
+        type: integer
+        format: int64
+      beanName:
+        description: spring beanname
+        type: string
+      methodName:
+        description: 方法名
+        type: string
+      params:
+        description: parameter
+        type: string
+      cronExpression:
+        description: cron table达式
+        type: string
+      status:
+        description: 任务state  0：normal  1：暂停
+        type: integer
+        format: int32
+      remark:
+        description: remark
+        type: string
+      createTime:
+        description: createTime
+        type: string
+        format: date-time
+

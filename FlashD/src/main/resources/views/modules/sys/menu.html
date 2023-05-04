@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Menu management</title>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+	<link rel="stylesheet" href="../../css/bootstrap.min.css">
+	<link rel="stylesheet" href="../../css/font-awesome.min.css">
+	<link rel="stylesheet" href="../../plugins/jqgrid/ui.jqgrid-bootstrap.css">
+	<link rel="stylesheet" href="../../plugins/ztree/css/metroStyle/metroStyle.css">
+	<link rel="stylesheet" href="../../css/bootstrap-table.min.css">
+	<link rel="stylesheet" href="../../css/main.css">
+	<link rel="stylesheet" href="../../plugins/treegrid/jquery.treegrid.css">
+
+	<script src="../../libs/jquery.min.js"></script>
+	<script src="../../plugins/layer/layer.js"></script>
+	<script src="../../libs/bootstrap.min.js"></script>
+	<script src="../../libs/vue.min.js"></script>
+	<script src="../../libs/bootstrap-table.min.js"></script>
+	<script src="../../plugins/treegrid/jquery.treegrid.min.js"></script>
+	<script src="../../plugins/treegrid/jquery.treegrid.bootstrap3.js"></script>
+	<script src="../../plugins/treegrid/jquery.treegrid.extension.js"></script>
+	<script src="../../plugins/treegrid/tree.table.js"></script>
+	<script src="../../plugins/jqgrid/grid.locale-cn.js"></script>
+	<script src="../../plugins/jqgrid/jquery.jqGrid.min.js"></script>
+	<script src="../../plugins/ztree/jquery.ztree.all.min.js"></script>
+	<script src="../../js/common.js"></script>
+</head>
+<body>
+<div id="rrapp" v-cloak>
+	<div v-show="showList">
+		<div class="grid-btn">
+			<a v-if="hasPermission('sys:menu:save')" class="btn btn-primary btn-sm" @click="add"><i class="fa fa-plus"></i>&nbsp;add</a>
+			<a v-if="hasPermission('sys:menu:update')" class="btn btn-primary btn-sm" @click="update"><i class="fa fa-pencil-square-o"></i>&nbsp;update</a>
+			<a v-if="hasPermission('sys:menu:delete')" class="btn btn-primary btn-sm" @click="del"><i class="fa fa-trash-o"></i>&nbsp;delete</a>
+		</div>
+		<table id="menuTable" data-mobile-responsive="true" data-click-to-select="true">
+			<thead>
+			<tr>
+				<th data-field="selectItem" data-checkbox="true"></th>
+			</tr>
+			</thead>
+		</table>
+	</div>
+
+	<div v-show="!showList" class="panel panel-default">
+		<div class="panel-heading">{{title}}</div>
+		<form class="form-horizontal">
+			<div class="form-group">
+				<div class="col-sm-2 control-label">type</div>
+				<label class="radio-inline">
+					<input type="radio" name="type" value="0" v-model="menu.type"/> directory
+				</label>
+				<label class="radio-inline">
+					<input type="radio" name="type" value="1" v-model="menu.type"/> menu
+				</label>
+				<label class="radio-inline">
+					<input type="radio" name="type" value="2" v-model="menu.type"/> button
+				</label>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-2 control-label">Menu name</div>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" v-model="menu.name" placeholder="menu name或buttonname"/>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-2 control-label">upper level menu</div>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" style="cursor:pointer;" v-model="menu.parentName" @click="menuTree" readonly="readonly" placeholder="First level menu"/>
+				</div>
+			</div>
+			<div v-if="menu.type == 1" class="form-group">
+				<div class="col-sm-2 control-label">MenuURL</div>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" v-model="menu.url" placeholder="menuURL"/>
+				</div>
+			</div>
+			<div v-if="menu.type == 1 || menu.type == 2" class="form-group">
+				<div class="col-sm-2 control-label">Authorization identification</div>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" v-model="menu.perms" placeholder="Multiple separated by commas, such as: user: list, user: create"/>
+				</div>
+			</div>
+			<div v-if="menu.type != 2" class="form-group">
+				<div class="col-sm-2 control-label">Row SerialNu</div>
+				<div class="col-sm-10">
+					<input type="number" class="form-control" v-model="menu.orderNum" placeholder="Row SerialNu"/>
+				</div>
+			</div>
+			<div v-if="menu.type != 2" class="form-group">
+				<div class="col-sm-2 control-label">icon</div>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" v-model="menu.icon" placeholder="menuicon"/>
+					<code style="margin-top:4px;display: block;">get icon：http://fontawesome.io/icons/</code>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-2 control-label"></div>
+				<input type="button" class="btn btn-primary" @click="saveOrUpdate" value="determine"/>
+				&nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="reload" value="return"/>
+			</div>
+		</form>
+	</div>
+</div>
+
+<!-- selectmenu -->
+<div id="menuLayer" style="display: none;padding:10px;">
+	<ul id="menuTree" class="ztree"></ul>
+</div>
+
+<script src="../../js/modules/sys/menu.js"></script>
+</body>
+</html>

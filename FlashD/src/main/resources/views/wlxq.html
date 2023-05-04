@@ -1,0 +1,874 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" by:nzcms·ningzhi.net
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="shortcut icon" type="image/ico" href="nz.ico">
+    <link href="js/home/css/css.css" rel="stylesheet" type="text/css"/>
+    <link href="js/home/css/css_2.css" rel="stylesheet" type="text/css"/>
+
+
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <!--    <link rel="stylesheet" href="css/font-awesome.min.css">-->
+    <!--    <link rel="stylesheet" href="plugins/jqgrid/ui.jqgrid-bootstrap.css">-->
+    <!--    <link rel="stylesheet" href="plugins/ztree/css/metroStyle/metroStyle.css">-->
+    <!--    <link rel="stylesheet" href="css/main.css">-->
+    <script src="libs/jquery.min.js"></script>
+    <script src="plugins/layer/layer.js"></script>
+    <script src="libs/bootstrap.min.js"></script>
+    <script src="libs/vue.min.js"></script>
+    <script src="plugins/jqgrid/grid.locale-cn.js"></script>
+    <script src="plugins/jqgrid/jquery.jqGrid.min.js"></script>
+    <script src="plugins/ztree/jquery.ztree.all.min.js"></script>
+    <script src="js/common.js"></script>
+    <script src="plugins/laydate/laydate.js"></script>
+    <script src="libs/jquery/jquery.PrintArea.min.js"></script>
+    <style>
+		/*html,*/
+		/*body,*/
+		/*#baiduMap {*/
+		/*	width: 100%;*/
+		/*	height: 100%;*/
+		/*	margin: 0px;*/
+		/*	padding: 0px;*/
+		/*	overflow: hidden;*/
+		/*}*/
+		ul li {
+			list-style: none;
+		}
+
+		.package-status {
+			padding: 18px 0 0 0
+		}
+
+		.package-status .status-list {
+			margin: 0;
+			padding: 0;
+			margin-top: -5px;
+			padding-left: 8px;
+			list-style: none;
+		}
+
+		.package-status .status-list>li {
+			border-left: 2px solid #0278D8;
+			text-align: left;
+		}
+
+		.package-status .status-list>li:before {
+			/* 流程点的样式 */
+			content: '';
+			border: 3px solid #0278D8;
+			background-color: #0278D8;
+			display: inline-block;
+			width: 6px;
+			height: 6px;
+			border-radius: 10px;
+			margin-left: -7px;
+			margin-right: 10px
+		}
+
+		.package-status .status-box {
+			overflow: hidden
+		}
+
+		.package-status .status-list>li {
+			height: auto;
+			width: 95%;
+		}
+
+		.package-status .status-list {
+			margin-top: -8px
+		}
+
+		.package-status .status-box {
+			position: relative
+		}
+
+		.package-status .status-box:before {
+			content: " ";
+			background-color: #f3f3f3;
+			display: block;
+			position: absolute;
+			top: -8px;
+			left: 20px;
+			width: 10px;
+			height: 4px
+		}
+
+		.package-status .status-list {
+			margin-top: 0px;
+		}
+
+		.status-list>li:not(:first-child) {
+			padding-top: 10px;
+		}
+
+		.status-content-before {
+			text-align: left;
+			margin-left: 25px;
+			margin-top: -10px;
+		}
+
+		.status-content-latest {
+			text-align: left;
+			margin-left: 25px;
+			color: #0278D8;
+			margin-top: -10px;
+		}
+
+		.status-time-before {
+			text-align: left;
+			margin-left: 25px;
+			font-size: 10px;
+			margin-top: 5px;
+		}
+
+		.status-time-latest {
+			text-align: left;
+			margin-left: 25px;
+			color: #0278D8;
+			font-size: 10px;
+			margin-top: 5px;
+		}
+
+		.status-line {
+			border-bottom: 1px solid #ccc;
+			margin-left: 25px;
+			margin-top: 10px;
+		}
+
+		.list {
+			padding: 0 20px;
+			background-color: #F8F8F8;
+			margin: 10px 0 0 25px;
+			border: 1px solid #EBEBEB;
+		}
+
+		.list li {
+			line-height: 30px;
+			color: #616161;
+		}
+    </style>
+    <!-- -->
+
+
+    <!-- -->
+    <script type="text/javascript" src="js/home/js/png.js"></script>
+    <script type="text/javascript" src="js/home/js/jquery.liMarquee.js"></script>
+    <script type="text/javascript">
+        DD_belatedPNG.fix('.png,.index_pic_img,.box');
+    </script>
+
+    <!-- -->
+</head>
+
+<body>
+<div id="rrapp">
+    <div id="top_box">
+        <div id="top_left">Welcome to the FlashD</div>
+        <div id="top_right">
+            <a href="javascript:void(0);" onclick="AddFavorite('Express logistics system',location.href)">Favorite</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+            <a href="javascript:void(0);" onclick="SetHome(this,document.domain);">Set as index</a></div>
+    </div>
+
+
+    <!-- -->
+    <script type="text/javascript">
+        <!--
+        var timeout = 200;
+        var closetimer = 0;
+        var ddmenuitem = 0;
+
+        // open hidden layer
+        function mopen(id) {
+            // cancel close timer
+            mcancelclosetime();
+
+            // close old layer
+            if (ddmenuitem) ddmenuitem.style.visibility = 'hidden';
+
+            // get new layer and show it
+            ddmenuitem = document.getElementById(id);
+            ddmenuitem.style.visibility = 'visible';
+
+        }
+
+        // close showed layer
+        function mclose() {
+            if (ddmenuitem) ddmenuitem.style.visibility = 'hidden';
+        }
+
+        // go close timer
+        function mclosetime() {
+            closetimer = window.setTimeout(mclose, timeout);
+        }
+
+        // cancel close timer
+        function mcancelclosetime() {
+            if (closetimer) {
+                window.clearTimeout(closetimer);
+                closetimer = null;
+            }
+        }
+
+        // close layer when click-out
+        document.onclick = mclose;
+
+        // -->
+        function SetHome(obj, url) {
+            try {
+                obj.style.behavior = 'url(#default#homepage)';
+                obj.setHomePage(url);
+            } catch (e) {
+                if (window.netscape) {
+                    try {
+                        netscape.security.PrivilegeManager.enablePrivilege("UniversalXPConnect");
+                    } catch (e) {
+                        alert("Sorry, this operation has been rejected by the browser!\n\nPlease enter 'about: config' in the browser address bar and enter, then set [signed. applets. codebase_principal_support] to 'true'");
+                    }
+                } else {
+                    alert("Sorry, the browser you are using cannot complete this operation.\n\nYou need to manually【" + url + "】Set to index.");
+                }
+            }
+        }
+
+        //Favorite
+        function AddFavorite(title, url) {
+            try {
+                window.external.addFavorite(url, title);
+            } catch (e) {
+                try {
+                    window.sidebar.addPanel(title, url, "");
+                } catch (e) {
+                    alert("Sorry, the browser you are using cannot complete this operation.\n\nFailed to add, please use Ctrl+D to add");
+                }
+            }
+        }
+
+        function message() {
+            $('#b').show();
+            $('#c').hide();
+            $('#d').hide();
+            var oDiv = document.getElementById('top_dh_01');
+            oDiv.style.height = '130px';
+        }
+
+        function messageout() {
+            var oDiv = document.getElementById('top_dh_01');
+            oDiv.style.height = '70px';
+        }
+
+        function messageC() {
+            $('#c').show();
+            $('#b').hide();
+            $('#d').hide();
+            var oDiv = document.getElementById('top_dh_01');
+            oDiv.style.height = '130px';
+        }
+
+        function messageoutC() {
+            var oDiv = document.getElementById('top_dh_01');
+            oDiv.style.height = '70px';
+        }
+
+        function messageD() {
+            $('#d').show();
+            $('#b').hide();
+            $('#c').hide();
+            var oDiv = document.getElementById('top_dh_01');
+            oDiv.style.height = '130px';
+        }
+
+        function messageoutD() {
+            var oDiv = document.getElementById('top_dh_01');
+            oDiv.style.height = '70px';
+        }
+    </script>
+
+    <div id="top_dh_01" style="text-align: center; background-color: #FFFFCD ;color: black">
+        <form method="post" class="form form-horizontal">
+            <div id="sddm" style=" width:1400px;margin: auto;height: 100%;overflow:hidden;">
+
+                <ul style=" list-style-type:none;  display:inline; text-align: center; ">
+                    <li style="  line-height: 65px; "><a href="" style="font-size:24px;color: black"><img src="img/logo.png" alt="" style="float: left;width: 55px;height: 55px;border-radius: 30%;margin-right: 10px;margin-top: 3px;"/>
+                        Welcome</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    </li>
+
+                    <li style="  line-height: 65px; font-size:18px;color: black"><a style="font-size:18px;color: black "
+                                                                        href="wpfh.html">My Order</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                    </li>
+                    <li style="  line-height: 65px; font-size:18px;color: black"><a style="font-size:18px;color: black"
+                                                                        href="grxqym.html">Profile</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                    </li>
+                    <li style="  line-height: 65px; font-size:18px;color: black"><a style="font-size:18px;color: black"
+                                                                        href="index.html#modules/sys/dingdan.html"> Administrator & Courier </a>&nbsp;&nbsp;&nbsp;&nbsp;
+                    </li>
+                    <li v-show="sfxsdl" style="  line-height: 65px; font-size:18px;color: black; margin-left: 100px;"><a style="font-size:18px;color: black">{{dlry}} logged</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                    </li>
+                    <li style="  line-height: 65px; font-size:18px;color: black">
+                        <a style="font-size:18px;color: black" @click="logout"> Exit</a>
+                    </li>
+
+                </ul>
+            </div>
+        </form>
+
+    </div>
+    <!-- -->
+
+
+    <link type="text/css" rel="stylesheet" href="js/home/css/wang.css">
+    <div>
+        <img src="img/banner.jpg" style="width: 100%;"/>
+    </div>
+    <div id="box">
+        <table class="table1200" border="0" align="center" cellpadding="0" cellspacing="8" bgcolor="#FFFFFF">
+            <tr valign="top">
+
+                <td align="center">
+
+
+                    <table height="30" border="0" cellpadding="0" cellspacing="0">
+                        <tr>
+                            <td></td>
+                        </tr>
+                    </table>
+                    <table width="100%" height="30" border="0" cellpadding="3" cellspacing="0" bgcolor="#F5F5F5"
+                           class="bg_qc">
+                        <tr>
+                            <td width="25" height="20" align="center"><img
+                                    src="img/nzcms.xinxin.gif" alt=""/></td>
+                            <td align="left" class="title12">Your location:
+
+                                Item Details
+                            </td>
+                        </tr>
+                    </table>
+                    <table height="10" border="0" cellpadding="0" cellspacing="0">
+                        <tr>
+                            <td></td>
+                        </tr>
+                    </table>
+
+                    <!-- view -->
+                    <meta http-equiv="Content-Type" content="text/html; "/>
+                    <!-- view -->
+                    <div>
+                        <div style="text-align: left">
+                            <table style="text-align: left;font-size: 20pt">
+                                <tr style="text-align: left;font-size: 20pt">
+                                    <td style="text-align: left;font-size: 20pt">
+										Order number:{{sysDingdan.id}}
+									</td>
+                                </tr>
+                                <tr style="text-align: left;font-size: 20pt">
+                                    <td style="text-align: left;font-size: 20pt">
+                                        {{sysDingdan.fcdcs}} <img src="img/jt.png" style="height: 18px;height: 30px" alt=""/> {{sysDingdan.mddcs}}
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+
+
+
+						<div class="package-status">
+							<div class="status-box">
+								<ul class="status-list" v-if="pointArr.length>0" v-for="(item, index) in pointArr">
+									<li>
+										<div class="status-content-before">{{item.name}}</div>
+										<div class="status-time-before">{{item.wldd}}</div>
+										<div class="status-line"></div>
+									</li>
+
+								</ul>
+							</div>
+						</div>
+
+
+
+                        <table width="98%" border="0" cellpadding="0" cellspacing="0" bordercolor="#FFFFFF">
+                            <tr>
+                                <td align="right" class="list_title" style=" border-bottom: 1px solid #d8dadc;">&nbsp;
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+    ﻿
+
+
+
+    <!-- payment Modal Box-->
+    <div class="modal fade" id="myModalPreachData" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" style="width: 800px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title">
+                        Enter shipment information
+                    </h4>
+                </div>
+                <div class="modal-body" style="height: 400px;text-align: center">
+                    <form id="upload" method="post" style="text-align: center" class="form-horizontal"
+                          enctype="multipart/form-data">
+
+                        <div class="form-group">
+                            <div class="col-sm-2 control-label">Item type</div>
+                            <div class="col-sm-10">
+                                <select class="form-control" id="type">
+                                    <option v-for="type in types" :value="type.id">{{type.name}}</option>
+                                </select>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <div class="col-sm-2 control-label">Item size(cm)</div>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="name" placeholder="30*13*10"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-2 control-label">Item weight</div>
+                            <div class="col-sm-10">
+                                <input type="number" class="form-control" id="zl" placeholder="kg"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-2 control-label">Number of items</div>
+                            <div class="col-sm-10">
+                                <input type="number" class="form-control" id="sl" placeholder="Number of items"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-2 control-label">Sender's username</div>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="shrxm" placeholder="Sender's username"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-2 control-label">Contact number</div>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="shrlxfs" placeholder="number"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-2 control-label">Sender's address</div>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="shdz" placeholder="sender's address"/>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <div class="col-sm-2 control-label">Receiver's username</div>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="fhrxm" placeholder="receiver's username"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-2 control-label">Contact number</div>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="fhrlxfs" placeholder="phone number"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-2 control-label">Receiver's address</div>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="fhdz" placeholder="Receiver's Address"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-2 control-label">Reference</div>
+                            <div class="col-sm-10">
+								<textarea rows="6" cols="68" style="width: 100%" id="bz">
+
+								</textarea>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close
+                    </button>
+                    <button type="button" class="btn btn-primary" @click="saveDingdan">
+                        Submit
+                    </button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+
+
+</div>
+<!--<div id="dituContent" style="width: 100%;height: 600px"></div>-->
+<div id="map" style="width:100%;height:600px;background:green"></div>
+
+
+
+<script src="libs/jquery.min.js"></script>
+<script src="plugins/jqgrid/jquery.jqGrid.min.js"></script>
+<script src="libs/vue.min.js"></script>
+<script src="libs/bootstrap.min.js"></script>
+<script src="libs/app.js"></script>
+<script src="js/common.js"></script>
+<!-- jsfile -->
+<!--<script type="text/javascript" src="https://api.map.baidu.com/api?v=3.0&ak=OLV2W7QHEE9btblyddTkBQBWhjXw030h"></script>-->
+<!--<script type="text/javascript" src="https://api.map.baidu.com/api?type=webgl&v=1.0&ak=OLV2W7QHEE9btblyddTkBQBWhjXw030h"></script>-->
+<!--<script type="text/javascript" src="js/map/mapone.js"></script>-->
+<!--<script type="text/javascript" src="http://api.map.baidu.com/api?key=&v=1.3&services=true"></script>-->
+<!--<script src="https://maps.googleapis.com/maps/api/js?callback=myMap"></script>-->
+<script src="js/googlemap/googlemap.js"></script>
+<script type="text/javascript">
+    var vm = new Vue({
+        el: '#rrapp',
+        data: {
+            sfxsdl:false,
+            dlry:'',
+            showLogin: false,
+            username: '',
+            password: '',
+            captcha: '',
+            error: false,
+            errorMsg: '',
+            errorMsgreg: '',
+            src: 'captcha.jpg',
+            sxh: '',
+            sname: '',
+            xzraol: '',
+            susername: '',
+            spassword: '',
+            college: '',
+            major: '',
+            classinfo: '',
+            grade: '',
+            zcspassword: '',
+            dingdanList: [],
+            sysuser: {},
+            jiaofeiid: '',
+            types: [],
+            pointArr:[],
+            dqjdX:"",
+            dqjdY:"",
+            sysDingdan:{},
+            sz:0,
+            imgs:"img/banner.jpg",
+        },
+        beforeCreate: function () {
+            if (self != top) {
+                top.location.href = self.location.href;
+            }
+        },
+        mounted: function () {   //
+            // this.getListAll();
+           this.getMap();
+            this.timer = setInterval(this.getData, 8000);//
+            this.getUserDl();
+        },
+        methods: {
+            logout: function () {
+                //
+                localStorage.removeItem("token");
+                //
+                location.href = baseURL + 'login.html';
+            },
+            getUserDl: function () {
+                var token = localStorage.getItem("token");
+                var param = {token:token}
+                $.ajax({
+                    type: "POST",
+                    url: baseURL + "sysIndexQd/getUserDl",
+                    contentType: "application/json",
+                    data: JSON.stringify(param),
+                    success: function(r){
+                        if(r.code === 0){
+                            vm.sfxsdl = r.sfxsdl;
+                            vm.dlry = r.dlry;
+                        }else{
+                            alert(r.msg);
+                        }
+                    }
+                });
+
+            },
+            getData: function() {//
+                var param = ["img/banner.jpg","img/banner2.jpg"]
+                vm.sz = vm.sz+1;
+                if(vm.sz>2){
+                    vm.sz = 0;
+                }
+                if(vm.sz == 0){
+                    console.log("0000000000000")
+                    vm.imgs = "img/banner.jpg";
+                }else if(vm.sz == 1){
+                    console.log("111111111111111")
+                    vm.imgs = "img/banner2.jpg";
+                }else if(vm.sz == 2){
+                    vm.imgs = "img/banner3.jpg";
+                }
+                console.log("aaaaaaaaaaaaa"+vm.sz)
+            },
+            getMap: function () {
+
+                var id ='';
+                var url = location.search;
+                if ( url.indexOf( "?" ) != -1 ) {
+                    var str = url.substr(1); //
+                    var index=str.lastIndexOf("\=");
+                    var id = str.substring(index+1,str.length);
+                }
+                console.log("id"+id)
+
+                var param = {id:id}
+                $.ajax({
+                    type: "POST",
+                    url: baseURL + "sysIndexQd/getMapInfo",
+                    contentType: "application/json",
+                    data: JSON.stringify(param),
+                    success: function (r) {
+                        if (r.code == 0) {
+                            vm.pointArr = r.pointArr
+                            // var center = {lat: 37.772, lng: -122.214};
+                            var center = {};
+                            if(vm.pointArr.length>0){
+                                center = {lat: parseFloat(vm.pointArr[0].lat), lng: parseFloat(vm.pointArr[0].lng)}
+                            }
+                            // console.log("center"+JSON.stringify(center))
+                            var mapOptions = {
+                                center: center, //
+                                zoom: 10,
+                                mapTypeId: google.maps.MapTypeId.ROADMAP,
+                                mapTypeControl: false,
+                                panControl: false,
+                                zoomControl: true,
+                                streetViewControl: false
+                                // center: new google.maps.LatLng(39.9, 116.39),
+                                // zoom: 10,
+                                // mapTypeId: google.maps.MapTypeId.HYBRID
+                            }
+                            var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+
+                            console.log("pointArr"+JSON.stringify(vm.pointArr))
+                            // var flightPlanCoordinates = [
+                            //     // {lat: 45.807416, lng: 126.544486},
+                            //     // {lat: 39.905832, lng: 116.3283},
+                            //     // {lat: 33.503489, lng: 116.220871},
+                            //     // {lat: 18.262307, lng: 109.515111}
+                            // ];
+                            var flightPlanCoordinates = [
+                                // {"lat":36.691353,"lng":116.993635},
+                                // {"lat":36.084945,"lng":120.384859},
+                                // {"lat":37.503897,"lng":121.077425},
+                                // {"lat":36.653418,"lng":117.011439},
+                                // {"lat":"18.262307","lng":"109.515111"}
+                                ];
+
+                            if(vm.pointArr.length>0){
+                                for (var i = 0, j = vm.pointArr.length; i < j; i++) {
+                                    var temp = vm.pointArr[i]
+                                    var tempparam = {lat:parseFloat(temp.lat),lng:parseFloat(temp.lng)}
+                                    flightPlanCoordinates.push(tempparam)
+                                }
+                            }
+
+                            console.log("flightPlanCoordinatesflightPlanCoordinates"+JSON.stringify(flightPlanCoordinates))
+                            var flightPath = new google.maps.Polyline({
+                                path: flightPlanCoordinates,
+                                geodesic: true,
+                                strokeColor: '#FF0000',
+                                strokeOpacity: 1.0,
+                                strokeWeight: 2
+                            });
+
+                            flightPath.setMap(map);
+
+                            var markerImage = "img/images/start.png";
+
+                            var marker = new google.maps.Marker({
+
+                                position: location,
+
+                                map: map,
+
+                                icon: markerImage
+
+                            });
+
+                            var contentString =
+
+                                '<div class="info-window">' +
+
+                                "<h3>Info Window Content</h3>" +
+
+                                '<div class="info-content">' +
+
+                                "<p></p>" +
+
+                                "</div>" +
+
+                                "</div>";
+
+
+
+                            var infowindow = new google.maps.InfoWindow({
+
+                                content: contentString,
+
+                                maxWidth: 400
+
+                            });
+
+
+
+                            marker.addListener("click", function() {
+
+                                infowindow.open(map, marker);
+
+                            });
+
+                        } else {
+                            alert(r.msg);
+                        }
+                    }
+                });
+
+
+
+
+            },
+
+            getTypes: function () {
+                var param = {}
+                $.ajax({
+                    type: "POST",
+                    url: baseURL + "sysIndexQd/getTypes",
+                    contentType: "application/json",
+                    data: JSON.stringify(param),
+                    success: function (r) {
+                        if (r.code == 0) {
+                            vm.types = r.types
+                        } else {
+                            alert(r.msg);
+                        }
+                    }
+                });
+            },
+            // type name zl sl shrxm shrlxfs shdz fhrxm fhrlxfs fhdz bz
+            saveDingdan: function () {
+                var token = localStorage.getItem("token");
+                var type = $("#type").val();
+                var name = $("#name").val();
+                var zl = $("#zl").val();
+                var sl = $("#sl").val();
+                var shrxm = $("#shrxm").val();
+                var shrlxfs = $("#shrlxfs").val();
+                var shdz = $("#shdz").val();
+                var fhrxm = $("#fhrxm").val();
+                var fhrlxfs = $("#fhrlxfs").val();
+                var fhdz = $("#fhdz").val();
+                var bz = $("#bz").val();
+                var param = {
+                    token: token,
+                    type: type,
+                    name: name,
+                    zl: zl,
+                    sl: sl,
+                    shrxm: shrxm,
+                    shrlxfs: shrlxfs,
+                    shdz: shdz,
+                    fhrxm: fhrxm,
+                    fhrlxfs: fhrlxfs,
+                    fhdz: fhdz,
+                    bz: bz
+                }
+                $.ajax({
+                    type: "POST",
+                    url: baseURL + "sysIndexQd/saveDingdan",
+                    contentType: "application/json",
+                    data: JSON.stringify(param),
+                    success: function (r) {
+                        if (r.code == 0) {
+                            alert('Book success and wait for the courier to pick up the goods at their doorstep', function () {
+                                $("#myModalPreachData").modal('hide');
+                                vm.getListAll();
+                            });
+                        } else {
+                            alert(r.msg);
+                        }
+                    }
+                });
+            },
+            wyjb: function () {
+                vm.getTypes();
+                $("#myModalPreachData").modal('show');
+            },
+            getUser: function () {
+                var token = localStorage.getItem("token");
+                console.log("tokentokentokentoken" + token)
+
+                if (token == null) {
+                    // parent.location.href = baseURL + 'login.html';
+                    window.open(baseURL + 'login.html');
+                } else {
+                    var tjarray = {"token": token}
+                    $.ajax({
+                        type: "POST",
+                        url: baseURL + "sysIndexQd/getUser",
+                        contentType: "application/json",
+                        data: JSON.stringify(tjarray),
+                        success: function (r) {
+                            if (r.code === 0) {
+                                vm.sysuser = r.sysuser;
+                            } else {
+                                alert(r.msg);
+                            }
+                        }
+                    });
+                }
+            },
+            getListAll: function () {
+                var token = localStorage.getItem("token");
+                console.log("tokentokentokentoken" + token)
+
+                if (token == null) {
+                    // parent.location.href = baseURL + 'login.html';
+                    window.open(baseURL + 'login.html');
+                } else {
+                    var tjarray = {"token": token}
+                    $.ajax({
+                        type: "POST",
+                        url: baseURL + "sysIndexQd/getDingdanListAll",
+                        contentType: "application/json",
+                        data: JSON.stringify(tjarray),
+                        success: function (r) {
+                            if (r.code === 0) {
+                                console.log("rrrrrrrrrrrrr" + JSON.stringify(r))
+                                vm.dingdanList = r.dingdanList;
+                            } else {
+                                alert(r.msg);
+                            }
+                        }
+                    });
+                }
+            },
+        }
+    });
+</script>
+</body>
+</html>

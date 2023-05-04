@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Transfer route </title>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+<link rel="stylesheet" href="../../css/bootstrap.min.css">
+<link rel="stylesheet" href="../../css/font-awesome.min.css">
+<link rel="stylesheet" href="../../plugins/jqgrid/ui.jqgrid-bootstrap.css">
+<link rel="stylesheet" href="../../plugins/ztree/css/metroStyle/metroStyle.css">
+<link rel="stylesheet" href="../../css/main.css">
+<script src="../../libs/jquery.min.js"></script>
+<script src="../../plugins/layer/layer.js"></script>
+<script src="../../libs/bootstrap.min.js"></script>
+<script src="../../libs/vue.min.js"></script>
+<script src="../../plugins/jqgrid/grid.locale-cn.js"></script>
+<script src="../../plugins/jqgrid/jquery.jqGrid.min.js"></script>
+<script src="../../plugins/ztree/jquery.ztree.all.min.js"></script>
+<script src="../../js/common.js"></script>
+	<script src="../../plugins/laydate/laydate.js"></script>
+	<script src="../../libs/jquery/jquery.PrintArea.min.js"></script>
+</head>
+<!--startprint-->
+<body>
+<div id="rrapp" v-cloak>
+	<div v-show="showList">
+		<div class="grid-btn">
+			<div class="form-group col-sm-2">
+				<input type="text" class="form-control" v-model="q.yszydName" @keyup.enter="query" placeholder="Transfer point">
+			</div>
+			<a class="btn btn-default" @click="query">query</a>
+			
+			<a v-if="hasPermission('sys:yszyd:save')" class="btn btn-primary btn-sm" @click="add"><i class="fa fa-plus"></i>&nbsp;add</a>
+			<a v-if="hasPermission('sys:yszyd:update')" class="btn btn-primary btn-sm" @click="update"><i class="fa fa-pencil-square-o"></i>&nbsp;update</a>
+			<a v-if="hasPermission('sys:yszyd:delete')" class="btn btn-primary btn-sm" @click="del"><i class="fa fa-trash-o"></i>&nbsp;delete</a>
+
+
+		</div>
+	    <table id="jqGrid"></table>
+	    <div id="jqGridPager"></div>
+    </div>
+    
+    <div v-show="!showList" class="panel panel-default">
+		<div class="panel-heading">{{title}}</div>
+		<form class="form-horizontal">
+
+			<div class="form-group">
+				<div class="col-sm-2 control-label">Select order</div>
+				<div class="col-sm-10">
+					<select class="form-control" v-model="yszyd.dingdanid" >
+						<option v-for="dingdan in dingdans" :value="dingdan.id">{{dingdan.name}}</option>
+					</select>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div class="col-sm-2 control-label">Item status</div>
+				<div class="col-sm-10">
+					<input type="text"  class="form-control" v-model="yszyd.name" placeholder="Reminder Information"/>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div class="col-sm-2 control-label">Transfer point</div>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" style="cursor:pointer;" v-model="yszyd.deptName" @click="deptTree" readonly="readonly" placeholder="Transfer has been reached point"/>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div class="col-sm-2 control-label">Arriving time</div>
+				<div class="col-sm-10">
+					<input type="text" readonly id="wldd" class="form-control" v-model="yszyd.wldd" placeholder="arrival time"/>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div class="col-sm-2 control-label">Node coordinate X-axis</div>
+				<div class="col-sm-10">
+					<input type="text"  class="form-control" v-model="yszyd.zydx" placeholder="Latitude"/>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div class="col-sm-2 control-label">Node coordinate Y-axis</div>
+				<div class="col-sm-10">
+					<input type="text"  class="form-control" v-model="yszyd.zydy" placeholder="Longitude"/>
+				</div>
+			</div>
+
+
+			<div class="form-group">
+				<div class="col-sm-2 control-label"></div>
+				<input type="button" class="btn btn-primary" @click="saveOrUpdate" value="determine"/>
+				&nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="reload" value="return"/>
+			</div>
+		</form>
+	</div>
+
+</div>
+
+<!-- Select Department -->
+<div id="deptLayer" style="display: none;padding:10px;">
+	<ul id="deptTree" class="ztree"></ul>
+</div>
+<script src="../../js/modules/sys/yszyd.js"></script>
+
+</body>
+<!--endprint-->
+</html>

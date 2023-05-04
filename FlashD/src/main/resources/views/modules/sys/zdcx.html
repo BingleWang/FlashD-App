@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Order Management</title>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+<link rel="stylesheet" href="../../css/bootstrap.min.css">
+<link rel="stylesheet" href="../../css/font-awesome.min.css">
+<link rel="stylesheet" href="../../plugins/jqgrid/ui.jqgrid-bootstrap.css">
+<link rel="stylesheet" href="../../plugins/ztree/css/metroStyle/metroStyle.css">
+<link rel="stylesheet" href="../../css/main.css">
+<script src="../../libs/jquery.min.js"></script>
+<script src="../../plugins/layer/layer.js"></script>
+<script src="../../libs/bootstrap.min.js"></script>
+<script src="../../libs/vue.min.js"></script>
+<script src="../../plugins/jqgrid/grid.locale-cn.js"></script>
+<script src="../../plugins/jqgrid/jquery.jqGrid.min.js"></script>
+<script src="../../plugins/ztree/jquery.ztree.all.min.js"></script>
+<script src="../../js/common.js"></script>
+	<script src="../../plugins/laydate/laydate.js"></script>
+	<script src="../../libs/jquery/jquery.PrintArea.min.js"></script>
+</head>
+<!--startprint-->
+<body>
+<div id="rrapp" v-cloak>
+	<div v-show="showList">
+		<div class="grid-btn">
+<!--			<div class="form-group col-sm-2">-->
+<!--				<input type="text" class="form-control" v-model="q.dingdanName" @keyup.enter="query" placeholder="item name">-->
+<!--			</div>-->
+			<div class="form-group col-sm-2">
+				<input type="text" class="form-control" v-model="q.qddfzr" @keyup.enter="query" placeholder="order负责人">
+			</div>
+			<div class="form-group col-sm-2">
+				<input type="text" class="form-control" id="qkssj" readonly v-model="q.qkssj" @keyup.enter="query" placeholder="Start">
+			</div>
+			<div class="form-group col-sm-2">
+				<input type="text" class="form-control" id="qjssj" readonly v-model="q.qjssj" @keyup.enter="query" placeholder="End">
+			</div>
+			<a class="btn btn-default" @click="query">query</a>
+			
+<!--			<a v-if="hasPermission('sys:dingdan:save')" class="btn btn-primary btn-sm" @click="add"><i class="fa fa-plus"></i>&nbsp;Courier shipment</a>-->
+<!--			<a v-if="hasPermission('sys:dingdan:update')" class="btn btn-primary btn-sm" @click="update"><i class="fa fa-pencil-square-o"></i>&nbsp;Courier comes to pick up the item</a>-->
+<!--			<a v-if="hasPermission('sys:dingdan:delete')" class="btn btn-primary btn-sm" @click="del"><i class="fa fa-trash-o"></i>&nbsp;delete</a>-->
+
+<!--			<a v-if="hasPermission('sys:dingdan:bgwlzt')" class="btn btn-primary btn-sm" @click="bgwlzt"><i class="fa fa-pencil-square-o"></i>&nbsp;Change Logistics status</a>-->
+		</div>
+	    <table id="jqGrid"></table>
+	    <div id="jqGridPager"></div>
+    </div>
+    
+    <div v-show="!showList" class="panel panel-default">
+		<div class="panel-heading">{{title}}</div>
+		<form class="form-horizontal">
+
+			<div class="form-group">
+				<div class="col-sm-2 control-label">Item type</div>
+				<div class="col-sm-10">
+					<select class="form-control" v-model="dingdan.ddtype" >
+						<option v-for="type in types" :value="type.id">{{type.name}}</option>
+					</select>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div class="col-sm-2 control-label">Item size</div>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" v-model="dingdan.name" id="name" placeholder="Item size"/>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div class="col-sm-2 control-label">Item weight</div>
+				<div class="col-sm-10">
+					<input type="number" class="form-control" id="zl" v-model="dingdan.zl" placeholder="Item weight"/>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div class="col-sm-2 control-label">Number of items</div>
+				<div class="col-sm-10">
+					<input type="number" class="form-control" id="sl" v-model="dingdan.sl" placeholder="Number of items"/>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div class="col-sm-2 control-label">Pick up username</div>
+				<div class="col-sm-10">
+					<input type="text"  class="form-control" id="shrxm" v-model="dingdan.shrxm" placeholder="Consignee username"/>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div class="col-sm-2 control-label">Contact number</div>
+				<div class="col-sm-10">
+					<input type="text"  class="form-control" id="shrlxfs" v-model="dingdan.shrlxfs" placeholder="Contact information of the consignee"/>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div class="col-sm-2 control-label">Pick up address</div>
+				<div class="col-sm-10">
+					<input type="text"  class="form-control" id="shdz" v-model="dingdan.shdz" placeholder="consignee's address"/>
+				</div>
+			</div>
+
+
+
+			<div class="form-group">
+				<div class="col-sm-2 control-label">Drop off username</div>
+				<div class="col-sm-10">
+					<input type="text"   class="form-control" v-model="dingdan.fhrxm" id="fhrxm" placeholder="Shipper username"/>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div class="col-sm-2 control-label">Contact number</div>
+				<div class="col-sm-10">
+					<input type="text"  class="form-control" v-model="dingdan.fhrlxfs" id="fhrlxfs" placeholder="Shipper's contact information"/>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div class="col-sm-2 control-label">Drop off address</div>
+				<div class="col-sm-10">
+					<input type="text"  class="form-control" v-model="dingdan.fhdz" id="fhdz" placeholder="Shipper Address"/>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div class="col-sm-2 control-label">Reference</div>
+				<div class="col-sm-10">
+					<textarea  rows="6" v-model="dingdan.bz" cols="58" id="bz">
+
+					</textarea>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div class="col-sm-2 control-label">Amount</div>
+				<div class="col-sm-3">
+					<input type="number" readonly class="form-control" v-model="dingdan.ddje" placeholder="Amount"/>
+				</div>
+				<div class="col-sm-2">
+<!--					<a class="btn btn-default" @click="csfkm">show payment code</a>-->
+				</div>
+				<div class="col-sm-2">
+					<a class="btn btn-default" @click="sfjeczb">Fee</a>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div class="col-sm-2 control-label">Starting point coordinate axis</div>
+				<div class="col-sm-3">
+					<input type="number" class="form-control" v-model="dingdan.qdhzbx" placeholder="Starting point coordinate X-axis"/>
+				</div>
+				<div class="col-sm-3">
+					<input type="number" class="form-control" v-model="dingdan.qdhzby" placeholder="Starting point coordinate Y-axis"/>
+				</div>
+				<div class="col-sm-2">
+					<a class="btn btn-default" @click="hqzbzsj">Obtain coordinate axis data</a>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div class="col-sm-2 control-label">End coordinate axis</div>
+				<div class="col-sm-3">
+					<input type="number" class="form-control" v-model="dingdan.shzbx" placeholder="End point coordinate X-axis"/>
+				</div>
+				<div class="col-sm-3">
+					<input type="number" class="form-control" v-model="dingdan.shzby" placeholder="End point coordinate Y-axis"/>
+				</div>
+				<div class="col-sm-2">
+					<a class="btn btn-default" @click="hqzbzsj">Obtain coordinate axis data</a>
+				</div>
+			</div>
+
+            <div class="form-group">
+                <div class="col-sm-2 control-label">Destination</div>
+                <div class="col-sm-10">
+                    <input type="text"  class="form-control" v-model="dingdan.mddcs"  placeholder="Destination"/>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-sm-2 control-label">Start point</div>
+                <div class="col-sm-10">
+                    <input type="text"  class="form-control" v-model="dingdan.fcdcs"  placeholder="Start point"/>
+                </div>
+            </div>
+
+
+			<div class="form-group">
+				<div class="col-sm-2 control-label"></div> 
+				<input type="button" class="btn btn-primary" @click="saveOrUpdate" value="determine"/>
+				&nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="reload" value="return"/>
+			</div>
+		</form>
+	</div>
+
+	<!-- Upload attachment Modal Box-->
+	<div class="modal fade" id="myModalPreachData" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+		 aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+						&times;
+					</button>
+					<h4 class="modal-title">
+						Payment
+					</h4>
+				</div>
+				<div class="modal-body" style="text-align: center">
+					<table style="text-align: center">
+						<tr style="text-align: center">
+							<td style="text-align: center">
+								<img src="/jeefast/img/wx.jpg" style="width: 200px;height: 300px">
+							</td>
+							<td style="text-align: center">
+								<img src="/jeefast/img/zfb.jpg" style="width: 200px;height: 300px">
+							</td>
+						</tr>
+					</table>
+
+
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">close
+					</button>
+					<button type="button" class="btn btn-primary" @click="saveFile">
+						Determined
+					</button>
+				</div>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal -->
+	</div>
+
+	<div class="modal fade" id="mybgwlztPreachData" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+		 aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+						&times;
+					</button>
+					<h4 class="modal-title">
+						Change Item status
+					</h4>
+				</div>
+				<div class="modal-body" style="text-align: center">
+					<div class="form-group">
+						<div class="col-sm-2 control-label">Item status</div>
+						<div class="col-sm-10">
+							<select class="form-control" id="sfqrsh" >
+								<option v-for="sfqrsh in sfqrshs" :value="sfqrsh.id">{{sfqrsh.name}}</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">close
+					</button>
+					<button type="button" class="btn btn-primary" @click="saveBgwlzt">
+						Determine changes
+					</button>
+				</div>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal -->
+	</div>
+
+</div>
+
+<!-- Select Department -->
+<div id="deptLayer" style="display: none;padding:10px;">
+	<ul id="deptTree" class="ztree"></ul>
+</div>
+   
+<script src="../../js/modules/sys/zdcx.js"></script>
+</body>
+<!--endprint-->
+</html>

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.jeefast.system.dao.SysDingdanDao">
+
+	<!-- General query mapping results -->
+	<resultMap id="BaseResultMap" type="cn.jeefast.system.entity.SysDingdan">
+		<id column="id" property="id" />
+		<result column="ddtype" property="ddtype" />
+		<result column="ddje" property="ddje" />
+		<result column="kssj" property="kssj" />
+		<result column="parintid" property="parintid" />
+		<result column="updatetime" property="updatetime" />
+		<result column="ydry" property="ydry" />
+		<result column="jssj" property="jssj" />
+	</resultMap>
+	<delete id="deleteBatch">
+		delete from sys_order where id in
+		<foreach item="dingdanIds" collection="array" open="(" separator="," close=")">
+			#{dingdanIds}
+		</foreach>
+	</delete>
+	<select id="queryPageList" resultType="cn.jeefast.system.entity.SysDingdan">
+		select id AS id,goodstype AS ddtype,orderamount AS ddje,
+		ordertime AS kssj,parintid,updatetime,customeraccount AS ydry,
+		endtime AS jssj,receivingaddress AS shdz,totalordernumber AS hjxdh,
+		currentlytransportedtothetransferpoint AS wlzt,
+		whethertoconfirmreceiptofgoods AS sfqrsh,standby1 AS sqthzt,
+		standby1 AS thyy,totalpaymentamount AS zongjiage,numberofitems AS sl,
+		Iteminformation AS `name`,customershippingaddress AS fhdz,
+		coordinatex AS shzbx,coordinatey AS shzby,coordinatey AS zl,
+		createtime,`createuser`,updateuser,shippersname AS fhrxm,
+		senderscontactinformation AS fhrlxfs,consigneesname AS shrxm,
+		consigneescontactinformation AS shrlxfs,remarks AS bz,
+		personinchargeoflogistics AS ddfzr,sendingcity AS fcdcs,
+		destinationcity AS mddcs,startpointcoordinatesx AS qdhzbx,
+		startpointcoordinatesy AS qdhzby,whethertheuserpaid AS yhsfyfk,
+		postcode1 AS ybone,postcode2 AS ybtwo,stf.stname typename from sys_order r
+		left join (select st.id stid,st.name stname from sys_type st) stf   on r.goodstype = stf.stid
+        <where>
+
+		</where>
+		order by r.updatetime
+	</select>
+
+<!--			left JOIN sys_food f-->
+<!--		on r.parintid = f.id-->
+	<select id="queryPageListByYye" resultType="java.util.Map">
+		select sum(r.orderamount) ddzje, count(*) xszs from sys_order r
+		<where>
+			<if test="sssj != null and sssj.trim() != ''">
+				and f.`createuser` = #{sssj}
+			</if>
+			<if test="kssj != null and kssj.trim() != ''">
+				and r.`ordertime` like concat('%',#{kssj},'%')
+			</if>
+
+		</where>
+	</select>
+    <select id="queryZdcxPageList" resultType="cn.jeefast.system.entity.SysDingdan">
+		select r.*,sum(r.orderamount) ddzje, count(*) xszs,round(sum(r.orderamount)-sum(r.orderamount)*0.2,2) wdylje,round(sum(r.orderamount)*0.2,2)  ptcchjje  from sys_order r
+		<where>
+			<if test="sssj != null and sssj.trim() != ''">
+				and r.`ddfzr` = #{sssj}
+			</if>
+			<if test="kssj != null and kssj.trim() != ''">
+				and r.`ordertime` like concat('%',#{kssj},'%')
+			</if>
+			<if test="qkssj != null and qjssj != null">
+				and r.`ordertime` >= #{qkssj} and r.`endtime` &lt;= #{qjssj}
+			</if>
+
+		</where>
+		group by r.ddfzr
+	</select>
+
+</mapper>
